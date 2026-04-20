@@ -4,7 +4,7 @@
     [Title]        NVARCHAR (8)                                NULL,
     [FirstName]    [dbo].[Name]                                NOT NULL,
     [MiddleName]   [dbo].[Name]                                NULL,
-    [LastName]     [dbo].[Name]                                NOT NULL,
+    [LastName]     [K7_surname].[Nazwisko]                     NOT NULL,
     [Suffix]       NVARCHAR (10)                               NULL,
     [CompanyName]  NVARCHAR (128)                              NULL,
     [SalesPerson]  NVARCHAR (256)                              NULL,
@@ -21,6 +21,8 @@
     PERIOD FOR SYSTEM_TIME ([SysStartTime], [SysEndTime])
 )
 WITH (SYSTEM_VERSIONING = ON (HISTORY_TABLE=[236817].[CustomerHistory], DATA_CONSISTENCY_CHECK=ON));
+
+
 
 
 
