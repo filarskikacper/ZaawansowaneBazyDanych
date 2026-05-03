@@ -29,8 +29,64 @@
 );
 
 
+
+
 GO
 CREATE NONCLUSTERED INDEX [IX_Product_ProductNumber]
     ON [SalesLT].[Product]([ProductNumber] ASC)
     INCLUDE([Name], [ProductCategoryID], [StandardCost]);
 
+
+GO
+CREATE TRIGGER [SalesLT].trg_Product_Price_Change
+ON SalesLT.Product
+AFTER UPDATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO SalesLT.ProductPriceHistory (ProductID, OldListPrice, NewListPrice)
+    SELECT
+        i.ProductID,
+        d.ListPrice AS OldListPrice,
+        i.ListPrice AS NewListPrice
+        FROM INSERTED i
+        JOIN DELETED d ON i.ProductID = d.ProductID
+        WHERE ISNULL(d.ListPrice, -1) <> ISNULL(i.ListPrice, -1);
+END
+GO
+
+CREATE TRIGGER [SalesLT].trg_Price_Attempt
+ON SalesLT.Product
+AFTER UPDATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF UPDATE(ListPrice)
+    BEGIN
+        IF EXISTS (
+            SELECT 1
+            FROM INSERTED i
+            JOIN DELETED d ON i.ProductID = d.ProductID
+            WHERE i.ListPrice > (d.ListPrice * 1.20)
+            )
+        BEGIN
+            INSERT INTO SalesLT.PriceLog (ProductID, OldPrice, AttemptedNewPrice)
+            SELECT
+                i.ProductID,
+                d.ListPrice,
+                i.ListPrice
+            FROM INSERTED i
+            JOIN DELETED d ON i.ProductID = d.ProductID
+            WHERE i.ListPrice > (d.ListPrice * 1.20);
+
+            UPDATE p
+            SET p.ListPrice = d.ListPrice
+            FROM SalesLT.Product p
+            JOIN DELETED d ON p.ProductID = d.ProductID
+            JOIN INSERTED i ON p.ProductID = i.ProductID
+            WHERE i.ListPrice > (d.ListPrice * 1.20);
+        END
+    END
+END;
