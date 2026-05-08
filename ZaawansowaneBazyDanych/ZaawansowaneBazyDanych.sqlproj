@@ -78,6 +78,8 @@
     <Folder Include="K7_surname\" />
     <Folder Include="K7_surname\User Defined Types\" />
     <Folder Include="Database Triggers\" />
+    <Folder Include="Student_7\Functions\" />
+    <Folder Include="SalesLT\Functions\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\BuildVersion.sql" />
@@ -134,5 +136,10 @@
     <Build Include="SalesLT\Tables\DeletedCustomersLog.sql" />
     <Build Include="dbo\Tables\DatabaseAuditLog.sql" />
     <Build Include="Database Triggers\trg_Table_Changes.sql" />
+    <Build Include="Student_7\Functions\ufn_ProductsJsonByCategory.sql" />
+    <Build Include="Student_7\Functions\ufn_IsPriceHigherThanCurrent.sql" />
+    <Build Include="SalesLT\Functions\BestRecord.sql" />
+    <Build Include="dbo\Functions\fn_GetCustomerCreditRisk.sql" />
+    <Build Include="Student_7\Functions\ufn_IsPriceHigherThanCurrentTAB.sql" />
   </ItemGroup>
 </Project>
