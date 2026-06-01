@@ -31,6 +31,8 @@
 
 
 
+
+
 GO
 CREATE NONCLUSTERED INDEX [IX_Product_ProductNumber]
     ON [SalesLT].[Product]([ProductNumber] ASC)
@@ -90,3 +92,8 @@ BEGIN
         END
     END
 END;
+GO
+GRANT SELECT
+    ON OBJECT::[SalesLT].[Product] TO [236817]
+    AS [dbo];
+

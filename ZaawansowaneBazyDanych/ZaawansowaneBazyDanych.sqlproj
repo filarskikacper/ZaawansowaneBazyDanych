@@ -148,5 +148,6 @@
     <Build Include="dbo\Stored Procedures\AddNewProduct.sql" />
     <Build Include="236817\Stored Procedures\FindCustomers.sql" />
     <Build Include="236817\Stored Procedures\AddCustomer.sql" />
+    <Build Include="Security\236817_1.sql" />
   </ItemGroup>
 </Project>

@@ -27,7 +27,21 @@ WITH (SYSTEM_VERSIONING = ON (HISTORY_TABLE=[236817].[CustomerHistory], DATA_CON
 
 
 
+
+
 GO
 CREATE NONCLUSTERED INDEX [IX_Customer_EmailAddress]
     ON [236817].[Customer]([EmailAddress] ASC);
+
+
+GO
+GRANT UPDATE
+    ON [236817].[Customer] ([FirstName]) TO [236817]
+    AS [dbo];
+
+
+GO
+GRANT SELECT
+    ON [236817].[Customer] ([FirstName]) TO [236817]
+    AS [dbo];
 
